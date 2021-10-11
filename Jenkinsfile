@@ -1,6 +1,6 @@
 @Library('javahome-libs') _
 pipeline{
-    agent any
+    agent any 
     tools{
         maven 'maven3'
     }
