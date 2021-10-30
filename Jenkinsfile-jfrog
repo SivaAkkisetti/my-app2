@@ -1,0 +1,37 @@
+def server = Artifactory.server 'unique'
+def rtMaven = Artifactory.newMavenBuild()
+def buildInfo
+
+pipeline {
+    agent any
+    tools{
+        maven 'Maven'
+    }
+    stages {
+        stage("Checkout"){
+            steps {
+                git branch: 'master', url: 'https://github.com/SivaAkkisetti/my-app2.git'
+            }
+        }
+        
+        stage('Artifactory_Configuration') {
+          steps {
+            script {
+    		  rtMaven.tool = 'Maven'
+    		  rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
+    		  buildInfo = Artifactory.newBuildInfo()
+    		  rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot', server: server
+              buildInfo.env.capture = true
+            }			                      
+          }
+        }
+        
+        stage('Execute_Maven') {
+    	  steps {
+    	    script {
+    		  rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
+            }			                      
+        }
+    }	
+    }
+}
