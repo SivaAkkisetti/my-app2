@@ -30,15 +30,17 @@
 
 	</dependencies>
 	<distributionManagement>
-		 <snapshotRepository>
-		    <id>nexus</id>
-		    <url>http://172.31.15.134:8081/repository/my-app-snapshot/</url>
-		 </snapshotRepository>
+    		<repository>
+        		<id>central</id>
+        		<name>ip-172-31-7-193.ap-south-1.compute.internal-releases</name>
+        		<url>http://ec2-13-127-125-220.ap-south-1.compute.amazonaws.com:8081/artifactory/libs-release-local</url>
+    		</repository>
 		
-		<repository>
-		    <id>nexus</id>
-		    <url>http://172.31.15.134:8081/repository/my-app-release/</url>
-		</repository>
+    		<snapshotRepository>
+        		<id>snapshots</id>
+        		<name>ip-172-31-7-193.ap-south-1.compute.internal-snapshots</name>
+        		<url>http://ec2-13-127-125-220.ap-south-1.compute.amazonaws.com:8081/artifactory/libs-snapshot-local</url>
+    		</snapshotRepository>
   	</distributionManagement>
 	
 <build>
